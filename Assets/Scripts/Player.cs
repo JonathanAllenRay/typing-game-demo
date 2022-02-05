@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
         MainWordQueue.hit += WordQueueHit;
         Enemy.attack += Attacked;
         SupportEnemy.attack += Attacked;
+        TankEnemy.attack += Attacked;
+        TauntEnemy.attack += Attacked;
     }
 
     private void OnDisable()
@@ -63,6 +65,7 @@ public class Player : MonoBehaviour
         MainWordQueue.hit -= WordQueueHit;
         Enemy.attack -= Attacked;
         SupportEnemy.attack -= Attacked;
+        TauntEnemy.attack -= Attacked;
     }
 
     private void WordQueueHit()

@@ -13,7 +13,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         SpawnEnemy(enemies[0]);
-        SpawnEnemy(enemies[1]);
+        SpawnEnemy(enemies[3]);
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class SpawnManager : MonoBehaviour
         if (spawnPoint >= 0)
         {
             spawnPointsOccupied[spawnPoint] = true;
-            GameObject.Instantiate(enemy, spawnPoints[spawnPoint].transform);
+            GameObject.Instantiate(enemy, spawnPoints[spawnPoint].transform.position, spawnPoints[spawnPoint].transform.rotation);
         }
     }
 

@@ -445,7 +445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469287798}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.99, y: 0, z: 0}
+  m_LocalPosition: {x: 11.71, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 269967451}
@@ -603,7 +603,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805351585}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.74, y: 0, z: 0}
+  m_LocalPosition: {x: -4.46, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 269967451}
@@ -788,7 +788,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193268172}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.85, y: 0, z: 0}
+  m_LocalPosition: {x: -22.29, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 269967451}
@@ -833,6 +833,8 @@ MonoBehaviour:
   enemies:
   - {fileID: 3037272780199093435, guid: 193e73c3e20238349a567b116ffdc02e, type: 3}
   - {fileID: 5388106663082956266, guid: 129018aa69c7bfb418856cb5c7b7803f, type: 3}
+  - {fileID: 8692467815047415589, guid: de01b574914f23f4f9ed695d10ff64aa, type: 3}
+  - {fileID: 6334462665857949206, guid: 3f4765f83b19fc64fab40cd0c9c1c069, type: 3}
 --- !u!4 &1269664201
 Transform:
   m_ObjectHideFlags: 0

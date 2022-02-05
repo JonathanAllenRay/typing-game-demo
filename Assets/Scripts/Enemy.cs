@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 {
     // Start is called before the first frame update
     public TextMeshProUGUI enemyWord;
+    public string enemyText;
     public TextMeshProUGUI stats;
     public int health = 100;
     public int maxHealth = 100;
@@ -24,6 +25,9 @@ public class Enemy : MonoBehaviour
     private List<string> statuses = new List<string>();
     private int dazeTimer = 0;
     private int poisonTimer = 0;
+    protected bool tookDamage = false;
+    protected bool taunting = false;
+    protected bool targetable = true;
 
     public delegate void enemySpawned(Enemy enemy);
     public static event enemySpawned spawned;
@@ -43,7 +47,8 @@ public class Enemy : MonoBehaviour
         {
             wordManager = GameObject.Find("WordManager").GetComponent<WordManager>();
         }
-        enemyWord.text = wordManager.GetWord();
+        enemyText = wordManager.GetWord();
+        enemyWord.text = enemyText;
         spawned(this);
         InvokeRepeating("Charge", 0f, 1.0f);
     }
@@ -66,15 +71,20 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
         stats.text = "HP: " + health + " - Action: " + action;
+        tookDamage = false; // Reset this
     }
 
     public bool BasicAttack(int damage, string word, string effect)
     {
-        if (word == enemyWord.text)
+        Debug.Log(word);
+        Debug.Log(enemyText);
+        if (word == enemyText)
         {
             ApplyEffect(effect);
-            enemyWord.text = wordManager.GetWord();
+            enemyText = wordManager.GetWord();
+            enemyWord.text = enemyText;
             health -= damage;
+            tookDamage = true;
             return true;
         }
         else
@@ -144,5 +154,25 @@ public class Enemy : MonoBehaviour
         {
             health = maxHealth;
         }
+    }
+
+    public bool Taunting()
+    {
+        return taunting;
+    }
+
+    public bool Targetable()
+    {
+        return targetable;
+    }
+
+    public void MakeUntargetable()
+    {
+        targetable = false;
+    }
+
+    public void MakeTargetable()
+    {
+        targetable = true;
     }
 }

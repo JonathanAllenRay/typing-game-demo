@@ -12,13 +12,13 @@ public class EnemyManager : MonoBehaviour
         {
             enemies.Add(enemy.GetComponent<Enemy>());
         }
-        Debug.Log(enemies.Count);
     }
     private void OnEnable()
     {
         Enemy.spawned += EnemySpawned;
         Player.sparks += ApplySparks;
         SupportEnemy.healAllies += HealAllEnemies;
+        TauntEnemy.updateTaunt += UpdateTauntEffect;
     }
 
     private void OnDisable()
@@ -26,6 +26,7 @@ public class EnemyManager : MonoBehaviour
         Enemy.spawned -= EnemySpawned;
         Player.sparks -= ApplySparks;
         SupportEnemy.healAllies -= HealAllEnemies;
+        TauntEnemy.updateTaunt -= UpdateTauntEffect;
     }
 
     private void EnemySpawned(Enemy enemy)
@@ -43,7 +44,7 @@ public class EnemyManager : MonoBehaviour
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i].BasicAttack(damage, word, effect))
+            if (enemies[i].Targetable() && enemies[i].BasicAttack(damage, word, effect))
             {
                 return true;
             }
@@ -76,9 +77,27 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateTauntEffect()
     {
-        
+        bool taunting = false;
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i].Taunting())
+            {
+                enemies[i].MakeTargetable();
+                taunting = true;
+            } else
+            {
+                enemies[i].MakeUntargetable();
+            }
+        }
+
+        if (!taunting)
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].MakeTargetable();
+            }
+        }
     }
 }
