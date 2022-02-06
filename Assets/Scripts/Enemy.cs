@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour
     public delegate void enemySpawned(Enemy enemy);
     public static event enemySpawned spawned;
 
+    public delegate void enemyDied();
+    public static event enemyDied died;
+
     void Start()
     {
         BaseSetup();
@@ -68,6 +71,7 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
+            died();
             Destroy(this.gameObject);
         }
         stats.text = "HP: " + health + " - Action: " + action;

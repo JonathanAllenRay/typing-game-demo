@@ -6,21 +6,26 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public int charge = 0;
-    private const int maxCharge = 100;
-    public const int maxHealth = 100;
-    public int health = maxHealth;
+    private int maxCharge = 100;
+    public int maxHealth = 9999;
+    public int health = 9999;
     public Text healthText;
     public Text chargeText;
+    public Text lvlText;
     private bool shieldActive;
     private int sparkDamage = 0;
     private int overchargeCounter = 0;
-    private int attackDamage = 10;
-    private int overchargeDamage = 15;
+    private int attackDamage = 999;
+    private int overchargeDamage = 20;
     private string effect;
+    private int playerLevel = 1;
+    private int exp = 0;
 
 
     public delegate void playerDied();
     public static event playerDied died;
+    public delegate void leveledUp();
+    public static event leveledUp lvlUp;
     public delegate void chargeSparks(int damage);
     public static event chargeSparks sparks;
 
@@ -35,6 +40,12 @@ public class Player : MonoBehaviour
         if (chargeText == null)
         {
             chargeText = GameObject.Find("Charge").GetComponent<Text>();
+        }
+
+        if (lvlText == null)
+        {
+            lvlText = GameObject.Find("Level").GetComponent<Text>();
+            lvlText.text = "Lv: " + playerLevel;
         }
     }
 
@@ -58,6 +69,7 @@ public class Player : MonoBehaviour
         SupportEnemy.attack += Attacked;
         TankEnemy.attack += Attacked;
         TauntEnemy.attack += Attacked;
+        Enemy.died += OnKill;
     }
 
     private void OnDisable()
@@ -66,6 +78,22 @@ public class Player : MonoBehaviour
         Enemy.attack -= Attacked;
         SupportEnemy.attack -= Attacked;
         TauntEnemy.attack -= Attacked;
+        Enemy.died -= OnKill;
+    }
+
+    private void OnKill()
+    {
+        exp += 25;
+        if (exp > 100)
+        {
+            exp = exp % 100;
+            exp = 0;
+            playerLevel++;
+            lvlText.text = "Lv: " + playerLevel;
+            maxHealth += 10;
+            attackDamage += 10;
+            lvlUp();
+        }
     }
 
     private void WordQueueHit()
@@ -168,12 +196,15 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
     // Get current boosted effect of attack
     public string GetEffect()
     {
         return effect;
+    }
+
+    public int GetLevel()
+    {
+        return playerLevel;
     }
 
 #region items

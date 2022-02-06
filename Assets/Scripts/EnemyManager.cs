@@ -8,17 +8,25 @@ public class EnemyManager : MonoBehaviour
     List<Enemy> enemies = new List<Enemy>();
     void Start()
     {
+        RefreshEnemyList();
+    }
+
+    private void RefreshEnemyList()
+    {
+        enemies = new List<Enemy>();
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             enemies.Add(enemy.GetComponent<Enemy>());
         }
     }
+
     private void OnEnable()
     {
         Enemy.spawned += EnemySpawned;
         Player.sparks += ApplySparks;
         SupportEnemy.healAllies += HealAllEnemies;
         TauntEnemy.updateTaunt += UpdateTauntEffect;
+        Enemy.died += RefreshEnemyList;
     }
 
     private void OnDisable()
@@ -27,6 +35,7 @@ public class EnemyManager : MonoBehaviour
         Player.sparks -= ApplySparks;
         SupportEnemy.healAllies -= HealAllEnemies;
         TauntEnemy.updateTaunt -= UpdateTauntEffect;
+        Enemy.died -= RefreshEnemyList;
     }
 
     private void EnemySpawned(Enemy enemy)
